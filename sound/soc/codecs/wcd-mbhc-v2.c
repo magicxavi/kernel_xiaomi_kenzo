@@ -57,8 +57,8 @@ module_param(det_extn_cable_en, int,
 MODULE_PARM_DESC(det_extn_cable_en, "enable/disable extn cable detect");
 
 /* AGNi Audio Jack Testing & Debuging (psndna88@gmail.com) */
-int hs_detect_plug_time_ms = (2 * 1000);
-int special_hs_detect_time_ms = (4 * 1000);
+int hs_detect_plug_time_ms = (1 * 500);
+int special_hs_detect_time_ms = (1 * 1000);
 int mbhc_button_press_threshold_min = 250;
 int wcd_fake_removal_min_period_ms = 100;
 int fake_rem_retry_attempts;
