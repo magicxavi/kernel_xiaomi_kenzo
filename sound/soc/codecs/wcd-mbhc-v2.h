@@ -21,7 +21,7 @@
 #define WCD_MBHC_DEF_BUTTONS 8
 #define WCD_MBHC_KEYCODE_NUM 8
 #define WCD_MBHC_USLEEP_RANGE_MARGIN_US 100
-#define WCD_MBHC_THR_HS_MICB_MV  2700
+#define WCD_MBHC_THR_HS_MICB_MV  2450
 /* z value defined in Ohms */
 #define WCD_MONO_HS_MIN_THR	2
 #define WCD_MBHC_STRINGIFY(s)  __stringify(s)
@@ -390,6 +390,7 @@ struct wcd_mbhc {
 	bool btn_press_intr;
 	bool is_hs_recording;
 	bool is_extn_cable;
+	bool extn_cable_inserted;
 	bool skip_imped_detection;
 	bool is_btn_already_regd;
 
@@ -481,8 +482,6 @@ struct wcd_mbhc {
 	sizeof(struct wcd_mbhc_imped_detect_cfg) + \
 	(cfg_ptr->_n_rload * \
 	(sizeof(cfg_ptr->_rload[0]) + sizeof(cfg_ptr->_alpha[0]))))
-
-void wcd_mbhc_plug_detect_for_debug_mode(struct wcd_mbhc *mbhc, int debug_mode); /* ASUS_BSP Paul +++ */
 
 #ifdef CONFIG_SND_SOC_WCD_MBHC
 int wcd_mbhc_set_keycode(struct wcd_mbhc *mbhc);

@@ -463,8 +463,8 @@ static long audio_cal_shared_ioctl(struct file *file, unsigned int cmd,
 			goto done;
 		}
 */
-		imp_val->ZL = g_ZL;
-		imp_val->ZR = g_ZR;
+		//imp_val->ZL = g_ZL;
+		//imp_val->ZR = g_ZR;
 		printk("%s: RR = %d , LL = %d\n", __func__ , imp_val->ZR , imp_val->ZL);
 		if (copy_to_user((void *)arg, imp_val,
 				sizeof(struct headset_imp_val))) {
