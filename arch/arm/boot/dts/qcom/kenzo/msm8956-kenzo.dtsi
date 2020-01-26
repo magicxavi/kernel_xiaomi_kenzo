@@ -23,24 +23,6 @@
 
 	chosen {
 		bootargs = "boot_cpus=0,1,2,3,4,5 sched_enable_hmp=1 sched_enable_power_aware=1";
-
-	};
-
-	firmware: firmware {
-                android {
-			compatible = "android,firmware";
-                        fstab {
-				compatible = "android,fstab";
-                                system {
-                                        compatible = "android,system";
-                                        dev = "/dev/block/platform/soc.0/7824900.sdhci/by-name/system";
-					type = "ext4";
-                                        mnt_flags = "ro,barrier=1,discard";
-					fsmgr_flags = "wait";
-                                        status = "ok";
-				};
-                        };
-		};
 	};
 
 	aliases {
@@ -67,7 +49,6 @@
 	aliases {
 		sdhc1 = &sdhc_1; /* SDC1 eMMC slot */
 		sdhc2 = &sdhc_2; /* SDC2 SD card slot */
-		sdhc3 = &sdhc_3; /* SDC3 SDIO card slot */
 		spi0 = &spi_0;
 	};
 
@@ -335,7 +316,8 @@
 			< 1190400000 5>,
 			< 1305600000 6>,
 			< 1382400000 7>,
-			< 1401600000 8>;
+			< 1401600000 8>,
+			< 1440000000 9>;
 		qcom,speed0-bin-v0-c1 =
 			<          0 0>,
 			<  400000000 1>,
@@ -344,7 +326,7 @@
 			< 1382400000 4>,
 			< 1612800000 5>,
 			< 1747200000 6>,
-			< 1804800000 7>;
+			< 1843200000 7>;
 		qcom,speed0-bin-v0-cci =
 			<          0 0>,
 			<  307200000 1>,
@@ -371,7 +353,7 @@
 			< 1382400000 4>,
 			< 1612800000 5>,
 			< 1747200000 6>,
-			< 1804800000 7>;
+			< 1843200000 7>;
 		qcom,speed1-bin-v0-cci =
 			<          0 0>,
 			<  307200000 1>,
@@ -463,7 +445,7 @@
 				< 1190400  4101 >,	/* SVS+  */
 				< 1382400  5712 >,	/* NOM   */
 				< 1612800  6152 >,	/* TURBO */
-				< 1804800  7104 >;
+				< 1843200  7104 >;
 		};
 
 		mincpubw-cpufreq {
@@ -491,7 +473,7 @@
 				< 1190400 403200 >,
 				< 1382400 441600 >,
 				< 1612800 556800 >,
-				< 1804800 614400 >;
+				< 1843200 614400 >;
 		};
 	};
 
@@ -530,7 +512,7 @@
 			< 1382400 >,
 			< 1612800 >,
 			< 1747200 >,
-			< 1804800 >;
+			< 1843200 >;
 	};
 
 	timer {
@@ -944,7 +926,6 @@
 		interrupt-names = "hc_irq", "pwr_irq";
 
 		qcom,bus-width = <8>;
-		qcom,large-address-bus;
 
 		qcom,cpu-dma-latency-us = <60 340 900>;
 		qcom,cpu-affinity = "affine_cores";
@@ -989,7 +970,6 @@
 		interrupt-names = "hc_irq", "pwr_irq";
 
 		qcom,bus-width = <4>;
-		qcom,large-address-bus;
 
 		qcom,cpu-dma-latency-us = <701>;
 
@@ -1013,61 +993,6 @@
 
 		qcom,clk-rates = <400000 25000000 50000000 100000000 200000000>;
 
-		status = "disabled";
-	};
-
-	sdhc_3: sdhci@7a24900 {
-		compatible = "qcom,sdhci-msm";
-		reg = <0x7a24900 0x11c>, <0x7a24000 0x800>;
-		reg-names = "hc_mem", "core_mem";
-
-		qcom,bus-width = <4>;
-		gpios = <&msm_gpio 44 0>, /* CLK */
-			<&msm_gpio 43 0>, /* CMD */
-			<&msm_gpio 42 0>, /* DATA0 */
-			<&msm_gpio 41 0>, /* DATA1 */
-			<&msm_gpio 40 0>, /* DATA2 */
-			<&msm_gpio 39 0>; /* DATA3 */
-		qcom,gpio-names = "CLK", "CMD", "DAT0", "DAT1", "DAT2", "DAT3";
-
-		qcom,clk-rates = <400000 20000000 25000000 50000000 100000000
-								200000000>;
-		qcom,cpu-dma-latency-us = <60>;
-		qcom,cpu-affinity = "affine_cores";
-		qcom,cpu-affinity-mask = <0x0f>;
-
-		clock-names = "iface_clk", "core_clk";
-		clocks = <&clock_gcc clk_gcc_sdcc3_ahb_clk>,
-			<&clock_gcc clk_gcc_sdcc3_apps_clk>;
-
-		qcom,core_3_0v_support;
-		qcom,nonremovable;
-		qcom,msm-bus,name = "sdhc3";
-		qcom,msm-bus,num-cases = <8>;
-		qcom,msm-bus,num-paths = <1>;
-		qcom,msm-bus,vectors-KBps = <79 512 0 0>, /* No vote */
-			<79 512 1600 3200>,    /* 400 KB/s*/
-			<79 512 80000 160000>, /* 20 MB/s */
-			<79 512 100000 200000>, /* 25 MB/s */
-			<79 512 200000 400000>, /* 50 MB/s */
-			<79 512 400000 800000>, /* 100 MB/s */
-			<79 512 800000 800000>, /* 200 MB/s */
-			<79 512 2048000 4096000>; /* Max. bandwidth */
-		qcom,bus-bw-vectors-bps = <0 400000 20000000 25000000 50000000
-						100000000 200000000 4294967295>;
-
-		#address-cells = <0>;
-		interrupt-parent = <&sdhc_3>;
-		interrupts = <0 1 2>;
-		#interrupt-cells = <1>;
-		interrupt-map-mask = <0xffffffff>;
-		interrupt-map = <0 &intc 0 295 0
-			1 &intc 0 297 0
-			2 &msm_gpio 45 0x4>;
-		interrupt-names = "hc_irq", "pwr_irq", "sdiowakeup_irq";
-
-		qcom,bus-speed-mode = "SDR12", "SDR25", "SDR50", "DDR50",
-						"SDR104";
 		status = "disabled";
 	};
 
@@ -1288,30 +1213,6 @@
 		compatible = "qcom,android-usb";
 		reg = <0x086000c8 0xc8>;
 		qcom,pm-qos-latency = <2 1001 12701>;
-	};
-
-	fsusb: qcom,ehci-host@79c0000 {
-		compatible = "qcom,ehci-host";
-		reg = <0x79c0000 0x400>;
-		interrupts = <0 132 0>;
-		status = "disabled";
-
-		clocks = <&clock_gcc clk_gcc_usb_fs_ahb_clk>,
-			 <&clock_gcc clk_gcc_usb_fs_system_clk>,
-			 <&clock_gcc clk_gcc_usb_fs_ic_clk>;
-			clock-names = "iface_clk", "core_clk", "alt_core_clk";
-
-		pinctrl-names = "uicc_active", "uicc_sleep";
-		pinctrl-0 = <&uicc_active>;
-		pinctrl-1 = <&uicc_sleep>;
-		HSUSB_3p3-supply = <&pm8950_l14>;
-
-		qcom,msm-bus,name = "uicc";
-		qcom,msm-bus,num-cases = <2>;
-		qcom,msm-bus,num-paths = <1>;
-		qcom,msm-bus,vectors-KBps =
-				<93 512 0 0>,
-				<93 512 12000 192000>;
 	};
 
 	slim_msm: slim@c140000{
@@ -1626,9 +1527,9 @@
 		qcom,support-bus-scaling;
 		qcom,msm-bus,vectors-KBps =
 			<55 512 0 0>,
-			<55 512 200000 400000>,
-			<55 512 300000 800000>,
-			<55 512 400000 1000000>;
+			<55 512 0 0>,
+			<55 512 120000 1200000>,
+			<55 512 393600 3936000>;
 		clocks = <&clock_gcc clk_crypto_clk_src>,
 			 <&clock_gcc clk_gcc_crypto_clk>,
 			 <&clock_gcc clk_gcc_crypto_ahb_clk>,
@@ -2683,6 +2584,11 @@
 			<0x0c0a3010 0x4>;
 		reg-names = "avtimer_lsb_addr", "avtimer_msb_addr";
 		qcom,clk_div = <27>;
+	};
+
+	audio_amplifier {
+		compatible = "aw,aw8738";
+		ext-spk-amp-gpio = <&msm_gpio 101 0>;
 	};
 
 	mcd {

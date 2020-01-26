@@ -34,7 +34,7 @@
                                         compatible = "android,system";
                                         dev = "/dev/block/platform/soc.0/7824900.sdhci/by-name/system";
                                         type = "ext4";
-                                        mnt_flags = "ro,barrier=1,discard";
+                                        mnt_flags = "ro,barrier=1,noatime,nodiratime,discard";
                                         fsmgr_flags = "wait,verify";
                                         status = "ok";
                                 };
@@ -952,7 +952,6 @@
 
 		sdhc-msm-crypto = <&sdcc1_ice>;
 		qcom,bus-width = <8>;
-		qcom,large-address-bus;
 
 		qcom,cpu-dma-latency-us = <60 340 900>;
 		qcom,cpu-affinity = "affine_cores";
@@ -997,7 +996,6 @@
 		interrupt-names = "hc_irq", "pwr_irq";
 
 		qcom,bus-width = <4>;
-		qcom,large-address-bus;
 
 		qcom,cpu-dma-latency-us = <701>;
 
@@ -1030,7 +1028,6 @@
 		reg-names = "hc_mem", "core_mem";
 
 		qcom,bus-width = <4>;
-		qcom,large-address-bus;
 		gpios = <&msm_gpio 44 0>, /* CLK */
 			<&msm_gpio 43 0>, /* CMD */
 			<&msm_gpio 42 0>, /* DATA0 */
@@ -1894,7 +1891,7 @@
 		qcom,sw-power-collapse;
 		qcom,reset-clock-control;
 		qcom,regulator-scaling;
-		qcom,max-hw-load = <1011840>; /* 3840 x 2176 @ 30 fps + 3840 x 2176 @ 1 fps */
+		qcom,max-hw-load = <979200>; /* 3840 x 2176 @ 30 fps */
 		qcom,dcvs-min-load = <734400>; /* 1920 x 1088 @ 90fps */
 		qcom,dcvs-min-mbperframe = <32400>; /* 3840 x 2160 */
 
