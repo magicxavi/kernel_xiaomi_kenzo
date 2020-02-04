@@ -33,7 +33,7 @@ rm -rf arch/arm64/boot/Image.gz-dtb
 # Export few variables
 export KBUILD_BUILD_USER="Magicxavi"
 export KBUILD_BUILD_HOST="Pornhub"
-export CROSS_COMPILE=/home/amol/pie/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+export CROSS_COMPILE=/home/magicxavi/aexN/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 export ARCH="arm64"
 export USE_CCACHE=1
 
