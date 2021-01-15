@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=Bloody-Kernel-Mod-x69
+kernel.string=ShineLotus
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
