@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=ShineLotus
+kernel.string=Bloss-ShineLotus
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
